@@ -7,7 +7,7 @@ Created on Fri Oct 16 15:12:51 2015
 
 from pylab import*
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 #from astropy.io import ascii
 #from astropy.table import Table
 
@@ -65,3 +65,15 @@ with open('automatic.csv') as csvfile:
     eventreader = csv.reader(csvfile)
     autolist=[esdeveniment_automatic(row) for row in eventreader]
 
+selectedmanual=zeros(10000)
+selectedauto=zeros(10000)
+i=0
+deltat=timedelta(seconds=20)
+for manual in manuallist:
+    for auto in autolist:
+        #print manual.date
+        #print auto.date
+        if manual.date-auto.date <= deltat:
+            print 'True'
+            i+=1
+print i
