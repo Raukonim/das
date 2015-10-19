@@ -6,9 +6,10 @@ Created on Fri Oct 16 15:12:51 2015
 """
 
 from pylab import*
+import csv
 from datetime import datetime
-from astropy.io import ascii
-from astropy.table import Table
+#from astropy.io import ascii
+#from astropy.table import Table
 
 
 class esdeveniment:
@@ -20,12 +21,13 @@ class esdeveniment:
         self.date=self.date.replace(hour=self.time.hour, 
                                     minute=self.time.minute, second=self.time.second, 
                                     microsecond=self.time.microsecond)
-        self.lat=float(event[3][:-2])
-        self.lon=event[4]
+        self.lat=float(event[3])
+        self.lon=float(event[4])
+        '''print self.lon
         if self.lon[-1]=='W':
             self.lon=float(event[4][:-2])*-1
         else:
-            self.lon=float(event[4][:-2])
+            self.lon=float(event[4][:-2])'''
         self.prof=int(event[5])
         self.mag=float(event[6])
 
@@ -38,4 +40,10 @@ esdeveniments=zeros(len(t))
 for i in range(len(t)):
     esdeveniments[i]=esdeveniment_manual(t[i])'''
 
-a=esdeveniment_manual(['l1510962','13/10/2015','20:11:42.10','42.55 N','1.96 E','8','2.0'])
+#a=esdeveniment(['l1510962','13/10/2015','20:11:42.10','42.55 N','1.96 E','8','2.0'])
+eventlist=[]
+with open('manual.csv') as csvfile:
+    eventreader = csv.reader(csvfile)
+    eventlist=[esdeveniment(row) for row in eventreader]
+    
+
