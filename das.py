@@ -24,11 +24,6 @@ class esdeveniment:
                                         microsecond=self.time.microsecond)
             self.lat=float(event[3])
             self.lon=float(event[4])
-            '''print self.lon
-            if self.lon[-1]=='W':
-                self.lon=float(event[4][:-2])*-1
-            else:
-                self.lon=float(event[4][:-2])'''
             self.prof=int(event[5])
             self.mag=float(event[6])
         except ValueError:
@@ -59,14 +54,7 @@ class esdeveniment_automatic(esdeveniment):
             self.inc_min=float(event[23])
         except ValueError:
             pass
-#t = Table.read('manual.csv', format='csv'''', dtype=('S8','S10','S11','f5','f5','i2','f4')''')
-'''
-t = ascii.read('manual.csv', delimiter=',')
-esdeveniments=zeros(len(t))
-for i in range(len(t)):
-    esdeveniments[i]=esdeveniment_manual(t[i])'''
 
-#a=esdeveniment(['l1510962','13/10/2015','20:11:42.10','42.55 N','1.96 E','8','2.0'])
 manuallist=[]
 with open('manual.csv') as csvfile:
     eventreader = csv.reader(csvfile)
