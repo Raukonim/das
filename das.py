@@ -66,7 +66,13 @@ class esdeveniment_automatic(esdeveniment):
                 self.azm_max, self.inc_max, self.eix_mig, self.azm_mig,
                 self.inc_mig, self.eix_min, self.azm_min, inc_min)'''
 
-            
+class comparativa_mag(object):
+    
+    def __init__(self, manual, automatic, pas, minim=-3, maxim=5):
+        binswidth=maxim-minim/pas
+        self.histoman, self.binsman=histogram(manual,binswidth,range=(minim, maxim))
+        self.histoauto, self.binsauto=histogram(auto,binswidth,range=(minim, maxim))
+    
 manuallist=[]
 with open('manual.csv') as csvfile:
     eventreader = csv.reader(csvfile)
@@ -80,7 +86,7 @@ with open('automatic.csv') as csvfile:
 selectedmanual=[]
 selectedauto=[]
 i=0
-deltat=timedelta(seconds=20)
+deltat=timedelta(seconds=15)
 for manual in manuallist:
     for auto in autolist:
         #print manual.date
@@ -90,3 +96,10 @@ for manual in manuallist:
             selectedauto.append(auto)
             i+=1
 print i
+
+magman=zeros(i)
+magauto=zeros(i)
+for event in range(i):
+    magman[event]=selectedmanual[event].mag
+    magauto[event]=selectedauto[event].mag
+histo05=comparativa_mag(magman, magauto, 0.5)
