@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 #from astropy.table import Table
 
 
-class esdeveniment:
+class esdeveniment(object):
     
     def __init__(self, event):
         try:
@@ -28,7 +28,10 @@ class esdeveniment:
             self.mag=float(event[6])
         except ValueError:
             pass
-
+    
+    def __repr__(self):
+        return '%s  %s  %s  %s  %s  %s' % (
+            self.code, self.date, self.lat, self.lon, self.prof, self.mag)
 
 class esdeveniment_automatic(esdeveniment):
     
@@ -54,7 +57,16 @@ class esdeveniment_automatic(esdeveniment):
             self.inc_min=float(event[23])
         except ValueError:
             pass
+        
+        '''def __repr__(self):
+            return '%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
+                self.code, self.date, self.lat, self.lon, self.prof, self.mag,                
+                self.rms, self.mindist , self.gap, self.numfases, self.nummags,
+                self.desvest, self.codibd, self.numfases_lec, self.eix_max,
+                self.azm_max, self.inc_max, self.eix_mig, self.azm_mig,
+                self.inc_mig, self.eix_min, self.azm_min, inc_min)'''
 
+            
 manuallist=[]
 with open('manual.csv') as csvfile:
     eventreader = csv.reader(csvfile)
@@ -65,15 +77,16 @@ with open('automatic.csv') as csvfile:
     eventreader = csv.reader(csvfile)
     autolist=[esdeveniment_automatic(row) for row in eventreader]
 
-selectedmanual=zeros(10000)
-selectedauto=zeros(10000)
+selectedmanual=[]
+selectedauto=[]
 i=0
 deltat=timedelta(seconds=20)
 for manual in manuallist:
     for auto in autolist:
         #print manual.date
         #print auto.date
-        if manual.date-auto.date <= deltat:
-            print 'True'
+        if abs(manual.date-auto.date) <= deltat:
+            selectedmanual.append(manual)
+            selectedauto.append(auto)
             i+=1
 print i
