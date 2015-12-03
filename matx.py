@@ -139,25 +139,17 @@ class esdeveniment_automatic(esdeveniment):
             str(self.eix_min), str(self.azm_min), str(self.inc_min))
 
 
-'''manual=esdeveniment_manual(['l1510441', '31/10/2015', '20:18:01.10', '42.18 N', 
-                            '3.17 E', '6', '1.0'])
-automatic=esdeveniment_automatic(['13770', '31/10/2015', '20:18:02.80', '42.26',
-                                  '3.1', '1', '1.1', '.3', '8', '160', '6', '2', 
-                                  '0', '52441', '6', '3.49', '59', '58', '5.99', 
-                                  '297', '18', '14.17', '198', '25'])
-'''
-
 dt_manual=dtype([('codi', str),('data',str), ('TU',str),('latitud',str), 
                  ('longitud',str), ('prof',int), ('magnitud', float)])
 
 manual_file=open('manual.csv', 'rb')
-manual_reader=csv.reader(manual_file, delimiter='\t')
+manual_reader=csv.reader(manual_file, delimiter=',')
 manual_list=[]
 for row in manual_reader:
     manual_list.append(esdeveniment_manual(asarray(row)))
 
 automatic_file=open('automatic.csv', 'rb')
-automatic_reader=csv.reader(automatic_file, delimiter='\t')
+automatic_reader=csv.reader(automatic_file, delimiter=',')
 automatic_list=[]
 for row in automatic_reader:
     automatic_list.append(esdeveniment_automatic(asarray(row)))
