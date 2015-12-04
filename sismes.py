@@ -8,13 +8,6 @@ Created on Mon Nov 30 13:54:59 2015
 from __future__ import division, print_function
 from pylab import*
 from datetime import datetime, time
-import csv
-import time as tm
-
-start_time = tm.time()
-
-interactive(True)
-close('all')
 
 
 class esdeveniment(object):
@@ -26,8 +19,8 @@ class esdeveniment(object):
         else:
             date=datetime.strptime(event[1],'%d/%m/%Y')
             temps1=str(event[2])[:5]
-            h=int(str(temps1[0:1]))
-            m=int(str(temps1[3:4]))
+            h=int(str(temps1[0:2]))
+            m=int(str(temps1[3:5]))
             temps2=str(event[2])[6:]
             s=int(float(temps2))
             ms=int("{0:.2f}".format(float(temps2))[3:])*10000
@@ -124,7 +117,7 @@ class esdeveniment_automatic(esdeveniment):
                 self.data=nan
                 self.compara=nan
             else:
-                self.compara=str(self.data.year)[-2:]+str(self.data.month)+str(self.codibd)[-3:]
+                self.compara=str(self.data.year)[2:]+str(self.data.month)+str(self.codibd)[2:]
         except ValueError:
             pass
     
@@ -137,24 +130,3 @@ class esdeveniment_automatic(esdeveniment):
             str(self.eix_max), str(self.azm_max), str(self.inc_max), 
             str(self.eix_mig), str(self.azm_mig), str(self.inc_mig), 
             str(self.eix_min), str(self.azm_min), str(self.inc_min))
-
-
-dt_manual=dtype([('codi', str),('data',str), ('TU',str),('latitud',str), 
-                 ('longitud',str), ('prof',int), ('magnitud', float)])
-
-manual_file=open('manual.csv', 'rb')
-manual_reader=csv.reader(manual_file, delimiter=',')
-manual_list=[]
-for row in manual_reader:
-    manual_list.append(esdeveniment_manual(asarray(row)))
-
-automatic_file=open('automatic.csv', 'rb')
-automatic_reader=csv.reader(automatic_file, delimiter=',')
-automatic_list=[]
-for row in automatic_reader:
-    automatic_list.append(esdeveniment_automatic(asarray(row)))
-
-
-
-time=tm.time()-start_time
-print ("runing time ="+str(time))
