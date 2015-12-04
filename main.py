@@ -32,6 +32,7 @@ automatic_list=[]
 for row in automatic_reader:
     automatic_list.append(sis.esdeveniment_automatic(asarray(row)))
 
+automatic_clean=[row for row in automatic_list if str(row.codi)!='nan']
 
 time=tm.time()-start_time
 print ("runing time ="+str(time))
