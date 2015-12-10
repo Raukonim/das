@@ -40,14 +40,15 @@ class esdeveniment_manual(esdeveniment):
             self.latitud=float(event[3])
             self.longitud=float(event[4])
             self.comarca=event[7]
+            self.coincideix=bool(event[8]=='True')
             self.compara=str(self.codi)[1:]
         except ValueError:
             pass
     
     def __repr__(self):
-        return '%s  %s %s %s %s %s %s' % (
+        return '\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (
             self.codi, str(self.data)[:-4], str(self.latitud), str(self.longitud), 
-            str(self.prof), str(self.magnitud), self.comarca)
+            str(self.prof), str(self.magnitud), self.comarca, self.coincideix)
             
 class esdeveniment_automatic(esdeveniment):
     

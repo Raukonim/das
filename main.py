@@ -5,7 +5,7 @@ Created on Fri Dec 04 15:01:15 2015
 @author: a.fajula
 """
 
-from __future__ import division
+#from __future__ import division
 from pylab import*
 import time as tm
 from datetime import datetime, timedelta
@@ -42,6 +42,7 @@ for row in automatic_reader:
     automatic_list.append(sis.esdeveniment_automatic(asarray(row)))
 
 automatic_clean=[row for row in automatic_list if str(row.codi)!='nan']
+automatic_hist=[]
 
 data_min=datetime(2005,04,17)
 data_max=datetime.today()
@@ -78,13 +79,16 @@ manual_selection=consulta(manualxdata, 'magnitud', mag_min, mag_max)
 automaticxdata=consulta(automatic_clean, 'data',data_min,data_max)
 automatic_selection=consulta(automaticxdata, 'magnitud', mag_min, mag_max)
 
-bins1=[-3,0.5,1,1.5,2,2.5,3,3.5,4,4.5]
-bins2=[-3,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,
-       1.8,1.9,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3,3.5,4,4.5,5,5.5]
-bins3=[-3,1.7,2,2.4,5.5]
-hst1=plotter.histograma(manual_selection,automatic_selection, bins1)
-hst2=plotter.histograma(manual_selection,automatic_selection, bins2)
-hst3=plotter.histograma(manual_selection,automatic_selection, bins3)
+manual_mags=[row.magnitud for row in manual_selection if row.magnitud!=nan]
+auto_mags=[row.magnitud for row in manual_selection if row.coincideix==True]
+
+bins1=array([-3,0.5,1,1.5,2,2.5,3,3.5,4,4.5])
+bins2=array([-3,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,
+       1.8,1.9,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3,3.5,4,4.5,5,5.5])
+bins3=array([-3,1.7,2,2.4,5.5])
+plotter.histograma(manual_mags,auto_mags, bins1)
+plotter.histograma(manual_mags,auto_mags, bins2)
+plotter.histograma(manual_mags,auto_mags, bins3)
 
 time=tm.time()-start_time
 print ("runing time ="+str(time))
