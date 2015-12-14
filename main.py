@@ -7,11 +7,13 @@ Created on Fri Dec 04 15:01:15 2015
 
 #from __future__ import division
 from pylab import*
+from Tkinter import*
 import time as tm
 from datetime import datetime, timedelta
 import csv
 import sismes as sis
 import plotter
+import gui
 
 
 start_time = tm.time()
@@ -48,30 +50,29 @@ data_min=datetime(2005,04,17)
 data_max=datetime.today()
 mag_min=-3
 mag_max=6
-print('Introdueix els valors desitjats per realitzar la consulta.')
-print('Els valors per defecte son data:[17/04/2005,avui], magnitud:[-3,6]')
-sel_params=raw_input('vols modificar aquests parametres?[y/N]\n')
-if sel_params=='y':
-    print('Si desitges modificar aquestes dades has introdueix-els seguint aquest exemple:')
-    print('2005 04 17 2015 12 31 -2 5')
 
-    lectura=raw_input('introdueix els parametres desitjats:\n')
-    boundary=lectura.split()
-    try:
-        any_min=int(boundary[0])
-        mes_min=int(boundary[1])
-        dia_min=int(boundary[2])
-        any_max=int(boundary[3])
-        mes_max=int(boundary[4])
-        dia_max=int(boundary[5])
-        mag_min=float(boundary[6])
-        mag_max=float(boundary[7])
-        data_min=datetime(any_min,mes_min,dia_min)
-        data_max=datetime(any_max,mes_max,dia_max)
-    except ValueError:
-        print('Nombre invalid') 
-else:
-    pass
+#print '\n'*100
+#print 'Starting...'    
+root = Tk()
+mygui=gui.MyGUI(root)
+#print "Ready to start executing the event loop."
+root.mainloop()
+#print mygui.entries
+
+boundary=mygui.entries
+try:
+    any_min=int(boundary[0])
+    mes_min=int(boundary[1])
+    dia_min=int(boundary[2])
+    any_max=int(boundary[3])
+    mes_max=int(boundary[4])
+    dia_max=int(boundary[5])
+    mag_min=float(boundary[6])
+    mag_max=float(boundary[7])
+    data_min=datetime(any_min,mes_min,dia_min)
+    data_max=datetime(any_max,mes_max,dia_max)
+except ValueError:
+    print('Nombre invalid') 
 
 manualxdata=consulta(manual_list, 'data', data_min, data_max)
 manual_selection=consulta(manualxdata, 'magnitud', mag_min, mag_max)
