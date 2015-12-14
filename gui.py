@@ -37,6 +37,10 @@ class MyGUI():
         buttons_frame_ipady = '1m'
         
         background_color='tan'
+        
+        introduccio='Introdueix els valors desitjats per realitzar la consulta.\n\
+        Els valors límit que ens poden introduir son:\n\
+        data: 17/04/2005, magnitud:-3 i 6'
         # -------------- end constants ----------------
         
         # top frame
@@ -88,7 +92,7 @@ class MyGUI():
         
         #------------------   TEXT   ------------------------------------
         
-        self.text=Label(self.top_frame, text='Introdueix els valors desitjats per realitzar la consulta.')
+        self.text=Label(self.top_frame, text=introduccio)
         self.text.configure(bg=background_color)
         self.text.pack(side=TOP, fill=X, anchor=CENTER)
         
@@ -220,6 +224,7 @@ class MyGUI():
         '''print "    buttonHandler routine received arguments:" \
             , argument1.ljust(8), argument2, argument3'''
         if argument2==2:
+            self.entries='exit'
             self.myParent.destroy()
         else:
             print '\t'+self.entryVariable1.get()+'\t'+self.entryVariable2.get()+'\t'+self.entryVariable3.get()+'\n'
