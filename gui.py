@@ -8,7 +8,8 @@ Created on Mon Dec 14 12:00:55 2015
 from __future__ import division
 from pylab import*
 from Tkinter import*
-import ttk
+#import ttk
+from datetime import datetime
 
 interactive(True)
 close('all')
@@ -23,7 +24,7 @@ class MyGUI():
         
         ### Our topmost frame is called myContainer1
         self.myContainer1 = Frame(parent, bg='tan') ###
-        self.myContainer1.pack()
+        self.myContainer1.pack(expand=YES, fill=BOTH)
         
         #------ constants for controlling layout ------
         button_width = 6
@@ -37,6 +38,9 @@ class MyGUI():
         buttons_frame_ipady = '1m'
         
         background_color='tan'
+        
+        avui=datetime.today()
+        any_avui=avui.year
         
         introduccio='Introdueix els valors desitjats per realitzar la consulta.\n\
         Els valors límit que ens poden introduir son:\n\
@@ -70,31 +74,44 @@ class MyGUI():
             ipadx=buttons_frame_ipadx,
             ipady=buttons_frame_ipady,
             )
-        #bottom frame
         
+        #bottom frame        
         self.bottom_frame = Frame(self.myContainer1,
                                   height=50,
                                   width=600,
                                   bg=background_color)
         self.bottom_frame.pack(
-            side=TOP,
+            side=BOTTOM,
             fill=X,
             expand=YES
             )
-            
+        
+        # checkbutton frame
+        self.checkbutton_frame = Frame(self.bottom_frame,
+                                       bg='blue')
+        self.checkbutton_frame.grid(row=0, column=0)
+#        self.checkbutton_frame.pack(
+#            side=TOP,
+#            fill=X,
+#            expand=YES
+#            )
+        
         # buttons frame
         self.buttons_frame = Frame(self.bottom_frame,
                                   bg=background_color)
-        self.buttons_frame.pack(
-            side=RIGHT,
-            fill=Y
-            )
+        self.buttons_frame.grid(row=1, column=0)
+#        self.buttons_frame.pack(
+#            side=TOP,
+#            expand=YES,
+#            fill=X,
+#            anchor=E
+#            )
         
         #------------------   TEXT   ------------------------------------
         
         self.text=Label(self.top_frame, text=introduccio)
         self.text.configure(bg=background_color)
-        self.text.pack(side=TOP, fill=X, anchor=CENTER)
+        self.text.pack(side=TOP, fill=NONE, expand=YES, anchor=CENTER)
         
         self.text_entries1 = Label(self.mid_frame)
         self.text_entries1.configure(text='Data minima',bg=background_color)
@@ -121,7 +138,7 @@ class MyGUI():
         self.entryVariable1 = StringVar()
         self.entry1 = Entry(self.mid_frame,textvariable=self.entryVariable1)
         #self.entry.bind("<Return>", self.OnPressEnter)
-        self.entryVariable1.set(u"2015")
+        self.entryVariable1.set(str(any_avui))
         self.entry1.grid(row=0, column=1, sticky=W)
         #self.entry1.pack(side=LEFT)
         
@@ -142,7 +159,7 @@ class MyGUI():
         self.entryVariable4 = StringVar()
         self.entry4 = Entry(self.mid_frame,textvariable=self.entryVariable4)
         #self.entry.bind("<Return>", self.OnPressEnter)
-        self.entryVariable4.set(u"2015")
+        self.entryVariable4.set(str(any_avui))
         self.entry4.grid(row=1, column=1, sticky=W)
         #self.entry4.pack(side=LEFT)
         
@@ -173,6 +190,22 @@ class MyGUI():
         self.entryVariable8.set(u"6")
         self.entry8.grid(row=1, column=5, sticky=E)
         #self.entry8.pack(side=LEFT)
+        
+        #------------------  CHECKBOX  ------------------------------------
+        
+        self.checkButton1=Checkbutton(self.checkbutton_frame, text='Histograma 1',
+                                     bg=background_color)
+        self.checkButton1.grid(row=0, column=0)
+        
+        self.checkButton2=Checkbutton(self.checkbutton_frame, text='Histograma 2',
+                                     bg=background_color)
+        self.checkButton2.grid(row=2, column=0)
+        
+        self.checkButton3=Checkbutton(self.checkbutton_frame, text='Histograma 3',
+                                     bg=background_color)
+        self.checkButton3.grid(row=3, column=0)
+        
+        #------------------  BUTTONS  ------------------------------------
         #------------------ BUTTON #1 ------------------------------------
         button_name='OK'
         # command binding
@@ -193,7 +226,7 @@ class MyGUI():
             padx=button_padx,
             pady=button_pady
             )
-        self.button1.pack(side=LEFT, padx=button_padx, pady=button_pady)
+        self.button1.pack(side=LEFT, padx=button_padx, pady=button_pady, anchor=E)
         self.button1.focus_force()
         #self.button1.bind('<Button-1>', self.button1Click)
         
@@ -218,7 +251,7 @@ class MyGUI():
             padx=button_padx,    ### (2)
             pady=button_pady     ### (2)
             )
-        self.button2.pack(side=LEFT, padx=button_padx, pady=button_pady)
+        self.button2.pack(side=LEFT, padx=button_padx, pady=button_pady, anchor=E)
     
     def buttonHandler(self, argument1, argument2, argument3):
         '''print "    buttonHandler routine received arguments:" \
@@ -227,9 +260,9 @@ class MyGUI():
             self.entries='exit'
             self.myParent.destroy()
         else:
-            print '\t'+self.entryVariable1.get()+'\t'+self.entryVariable2.get()+'\t'+self.entryVariable3.get()+'\n'
-            print '\t'+self.entryVariable4.get()+'\t'+self.entryVariable5.get()+'\t'+self.entryVariable6.get()+'\n'
-            print '\t'+self.entryVariable7.get()+'\t'+self.entryVariable8.get()+'\n'
+            #print '\t'+self.entryVariable1.get()+'\t'+self.entryVariable2.get()+'\t'+self.entryVariable3.get()+'\n'
+            #print '\t'+self.entryVariable4.get()+'\t'+self.entryVariable5.get()+'\t'+self.entryVariable6.get()+'\n'
+            #print '\t'+self.entryVariable7.get()+'\t'+self.entryVariable8.get()+'\n'
             
             self.entries=[
                 int(self.entryVariable1.get()),

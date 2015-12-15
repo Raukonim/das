@@ -7,7 +7,7 @@ Created on Mon Nov 30 13:54:59 2015
 
 from __future__ import division, print_function
 from pylab import*
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 
 class esdeveniment(object):
@@ -131,3 +131,10 @@ class esdeveniment_automatic(esdeveniment):
             str(self.eix_max), str(self.azm_max), str(self.inc_max), 
             str(self.eix_mig), str(self.azm_mig), str(self.inc_mig), 
             str(self.eix_min), str(self.azm_min), str(self.inc_min))
+
+def consulta(llista, element, minim, maxim):
+        if element=='magnitud':
+            seleccio=[row for row in llista if (row.magnitud>=minim and row.magnitud<=maxim)]
+        elif element=='data':
+            seleccio=[row for row in llista if (row.data>=minim and row.data<maxim+timedelta(days=1))]
+        return seleccio

@@ -39,14 +39,14 @@ def histograma(llista1, llista2, rangs):
     title('Nombre de sismes i % deteccio (LOCAL)')
     rects1=ax.bar(index,histogram1, bar_width, alpha=opacity,color='b',label='Manual' )
     rects2=ax.bar(index+bar_width,histogram2, bar_width, alpha=opacity,color='r',label='Automatic' )
-    ax.set_xlabel('Valor del rang de Magnitud Manual (min/max no inclos')
+    ax.set_xlabel('Valor del rang de Magnitud Manual (min/max no inclos)')
     ax.set_ylabel('Freq')
     
     ax.legend()
     autolabel(rects1)
     autolabel(rects2)
     
-    xticks(index+bar_width, tics[:])
+    xticks(index+bar_width, tics[:], rotation='vertical')
     
     ax2 = ax.twinx()
     a1=array(histogram1[:],dtype=int)
@@ -59,7 +59,9 @@ def histograma(llista1, llista2, rangs):
     
     ax2.plot(index+bar_width,x)
     for xy in zip(index,x):                                                # <--
-        ax2.annotate('%s' % int(xy[1])+'%', xy=xy, xytext=(xy[0]+bar_width,xy[1]+0.5), textcoords='data') # <--
+        ax2.annotate('%s' % int(xy[1])+'%', xy=xy,
+                     xytext=(xy[0]+bar_width,xy[1]+0.5),
+                     textcoords='data', color='green') # <--
     ax2.set_ylim(0,120)
     show()
     
